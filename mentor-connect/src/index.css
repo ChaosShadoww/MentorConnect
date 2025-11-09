@@ -24,8 +24,8 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  /* display: flex; */
+  /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
 }
@@ -65,4 +65,31 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* header for both home pages */
+.header{
+  size: 70;
+  top: 0;
+  text-align: center;
+}
+
+/* mentorBoxes component */
+
+
+.mentor-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mentor-name {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 1.3rem;
+}
+
+.mentor-career {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
 }

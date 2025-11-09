@@ -6,11 +6,18 @@ import Button from '../components/Button'
 function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate() 
+    const navigate = useNavigate()
+    const [selectedRole, setSelectedRole] = useState<'mentor' | 'mentee' | null>(null)
 
     const handleLogin = () => {
         console.log('Email:', email)
         console.log('Password:', password)
+
+        if (selectedRole === 'mentor') {
+          navigate('/mentor-home')
+        } else if ( selectedRole === 'mentee') {
+          navigate('/mentee-home')
+        }
     }
     
     const handleCreateAccount = () => {
@@ -19,8 +26,8 @@ function Login() {
 
     return (
     <div className="login-page"> 
-    <Button text="Mentor" onClick={() => console.log('Mentor clicked')}></Button>
-    <Button text="Mentee" onClick={() => console.log('Mentee clicked')}></Button>
+    <Button text="Mentor" onClick={() => setSelectedRole('mentor')}></Button>
+    <Button text="Mentee" onClick={() => setSelectedRole('mentee')}></Button>
       
       <h1>MentorConnect</h1>
       <input 

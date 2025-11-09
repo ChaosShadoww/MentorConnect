@@ -6,11 +6,22 @@ import { useNavigate  } from 'react-router-dom'
 function CreateProfile() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [selectedRole, setSelectedRole] = useState<'mentor' | 'mentee' | null>(null)
   const navigate = useNavigate() 
 
   const handleSubmit = () =>{
-    console.log('Profile created!')
-    navigate('/')
+    if(password === confirmPassword && password !== "" && confirmPassword !== ""){
+      if (selectedRole === 'mentor') {
+          //sent to table for mentor
+        } else if ( selectedRole === 'mentee') {
+          //sent to table for mentor
+        }
+        console.log('Profile created!')
+        navigate('/')
+    }else{
+      console.log('Passwords do not match')
+    }
   }
 
   return (
@@ -26,12 +37,21 @@ function CreateProfile() {
       />
       <br />
       <input 
+        id="firstPass"
         type="password" 
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <br />
+      <input 
+        id="confirmPass"
+        type="password" 
+        placeholder="Confrim Password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
+      <br/>
       <Button text="Create Account" onClick={handleSubmit}></Button>
     </div>
   )
