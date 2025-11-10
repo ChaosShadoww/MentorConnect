@@ -13,9 +13,9 @@ function Login() {
         console.log('Email:', email)
         console.log('Password:', password)
 
-        if (selectedRole === 'mentor') {
+        if (selectedRole === 'mentor' && email !== "" && password !== "") {
           navigate('/mentor-home')
-        } else if ( selectedRole === 'mentee') {
+        } else if ( selectedRole === 'mentee' && email !== "" && password !== "") {
           navigate('/mentee-home')
         }
     }
