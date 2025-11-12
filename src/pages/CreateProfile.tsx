@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 
 function CreateProfile() {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -24,6 +25,11 @@ function CreateProfile() {
     if (password.length < 8) {
       alert('Password must be at least 8 characters')
       console.log('Password is less than 8 digits')
+      return
+    }
+    if (!name) {
+      alert('Please enter your name')
+      console.log('Please enter your name')
       return
     }
     if (!email) {
@@ -62,6 +68,7 @@ function CreateProfile() {
         .from('users')
         .insert([
           {
+            name: name,
             email: email,
             password: password,
             role: selectedRole,
@@ -98,6 +105,14 @@ function CreateProfile() {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       
+      <input 
+        id="name"
+        type="name" 
+        placeholder="Please enter your name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <br />
       <input 
         type="email" 
         placeholder="Email"

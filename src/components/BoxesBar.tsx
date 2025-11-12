@@ -1,13 +1,7 @@
 ﻿import React, { useEffect, useRef, useState } from 'react';
 import MentorBoxes, { type Mentor } from './MentorBoxes';
-import './BoxesBar.css'; 
-
-const defaultTestMentors: Mentor[] = [
-  { id: '1', name: 'John Doe', title: 'Software Engineer' },
-  { id: '2', name: 'Jane Smith', title: 'Data Scientist' },
-  { id: '3', name: 'Mike Johnson', title: 'Product Manager' },
-  { id: '4', name: 'Sarah Williams', title: 'UX Designer' },
-];
+import './BoxesBar.css';
+import { supabase } from '../supabaseClient';
 
 type Props = {
   mentors?: Mentor[];
@@ -17,7 +11,7 @@ type Props = {
 };
 
 export default function BoxesBar({
-  mentors = defaultTestMentors,
+  mentors: mentorsProp,
   cardWidth = 260,
   gap = 16,
   onCardClick,
@@ -25,6 +19,10 @@ export default function BoxesBar({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+
+  // Local state for mentors coming from the DB
+  const [mentors, setMentors] = useState<Mentor[]>(mentorsProp ?? []);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -41,6 +39,51 @@ export default function BoxesBar({
       window.removeEventListener('resize', update);
     };
   }, [mentors]);
+
+  // Fetch mentors from Supabase on mount (only if mentorsProp not provided)
+  useEffect(() => {
+    // If mentors were passed as a prop, don't overwrite them
+    if (mentorsProp && mentorsProp.length > 0) {
+      setMentors(mentorsProp);
+      return;
+    }
+
+    let isMounted = true;
+    setLoading(true);
+
+    (async () => {
+      try {
+        const { data, error } = await supabase
+          .from('users')
+          .select('id, name, email, career, role, created_at')
+          .eq('role', 'mentor')
+          .order('created_at', { ascending: false })
+          .limit(100);
+
+        if (error) {
+          console.error('Error fetching mentors:', error);
+          return;
+        }
+        if (!isMounted) return;
+
+        // Map DB rows to Mentor shape used by MentorBoxes
+        const mapped: Mentor[] = (data ?? []).map((row: any) => ({
+          id: row.id,
+          name: row.name ?? `mentor-${row.id}`, // fallback if name not present
+          title: row.career ?? '',
+        }));
+        setMentors(mapped);
+      } catch (err) {
+        console.error('Unexpected error loading mentors:', err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [mentorsProp]);
 
   const scrollAmount = Math.round(cardWidth + gap);
 
@@ -72,10 +115,20 @@ export default function BoxesBar({
         ‹
       </button>
 
-      <div ref={containerRef} className="boxesbar" role="list" tabIndex={0} aria-label="Mentors list">
-        {mentors.map((m, i) => (
+      <div
+        ref={containerRef}
+        className="boxesbar"
+        role="list"
+        tabIndex={0}
+        aria-label="Mentors list"
+      >
+        {loading ? (
+          <div style={{ padding: 16 }}>Loading mentors…</div>
+        ) : (
+          mentors.map((m, i) => (
             <MentorBoxes key={m.id ?? i} mentor={m} onClick={onCardClick} />
-        ))}
+          ))
+        )}
       </div>
 
       <button

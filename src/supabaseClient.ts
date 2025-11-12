@@ -15,6 +15,7 @@ export type Database = {
       users: {
         Row: {
           id: string
+          name: string | null
           email: string
           password: string
           role: 'mentor' | 'mentee'
@@ -23,6 +24,7 @@ export type Database = {
         }
         Insert: {
           id?: string
+          name?: string
           email: string
           password: string
           role: 'mentor' | 'mentee'
@@ -31,6 +33,7 @@ export type Database = {
         }
         Update: {
           id?: string
+          name?: string | null
           email?: string
           password?: string
           role?: 'mentor' | 'mentee'

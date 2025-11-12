@@ -7,14 +7,6 @@ export type Mentor = {
   id?: string;
 };
 
-/**
- *  careerFields: String[]
-+location: String
-+experience: Number
-+bio: String
-
- */
-
 
 
 type Props = {
@@ -38,11 +30,19 @@ export default function MentorBoxes({ mentor, onClick}: Props) {
 
     }
   }
+
+  const handleProfile = () => {
+    if (onClick){
+      navigate('/mentor-profile-view')
+    }
+  }
+
   return (
     <div className="mentor-box">
       <h3 className="mentor-name">{mentor.name}</h3>
       <p className="mentor-career">{mentor.title}</p>
       <Button text="Start Chat" onClick={handleClick}></Button>
+      <Button text="Profile" onClick={handleProfile}></Button>
     </div>
   )
 }
