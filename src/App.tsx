@@ -1,4 +1,4 @@
-﻿import './App.css'
+import './App.css'
 import Login from './pages/Login'
 import MentorHome from './pages/MentorHome'
 import MenteeHome from './pages/MenteeHome'
@@ -20,7 +20,7 @@ function App() {
           <Route path="/mentee-home" element={<MenteeHome />} />
           <Route path="/chat/:chatId" element={<ChatPage />} />
           <Route path="/view-account" element={<AccountView />} />
-          <Route path="/mentor-profile-view" element={<MentorProfileView />} />
+          <Route path="/mentor-profile/:mentorId" element={<MentorProfileView />} />
          
         </Routes>
       </div>
