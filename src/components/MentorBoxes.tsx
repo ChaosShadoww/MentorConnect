@@ -1,4 +1,4 @@
-﻿import Button from '../components/Button'
+import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
 
 export type Mentor = {
@@ -6,8 +6,6 @@ export type Mentor = {
   title?: string;
   id?: string;
 };
-
-
 
 type Props = {
   mentor: Mentor;
@@ -21,19 +19,22 @@ export default function MentorBoxes({ mentor, onClick}: Props) {
   const handleClick = () => {
     if(onClick){
       onClick(mentor);
-        // If mentor.id exists, use it as the chat id
+      // If mentor.id exists, use it as the chat id
       const chatId = mentor.id ?? `mentor-${mentor.name.replace(/\s+/g, '-')}`;
 
       // Try to read current user id from localStorage (or replace with your auth)
       const currentUserId = localStorage.getItem('currentUserId') ?? 'unknown-user';
       navigate(`/chat/${chatId}`, { state: { currentUserId } });
-
     }
   }
 
   const handleProfile = () => {
-    if (onClick){
-      navigate('/mentor-profile-view')
+    // Pass the mentor ID in the URL
+    if (mentor.id) {
+      navigate(`/mentor-profile/${mentor.id}`)
+    } else {
+      console.error('Mentor ID is missing')
+      alert('Cannot view profile: Mentor ID is missing')
     }
   }
 
@@ -46,4 +47,3 @@ export default function MentorBoxes({ mentor, onClick}: Props) {
     </div>
   )
 }
-
