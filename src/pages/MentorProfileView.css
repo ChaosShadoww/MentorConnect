@@ -23,6 +23,7 @@
 .mentor-profile-page h1 {
   margin-bottom: 30px;
   text-align: center;
+  color: #fff;
 }
 
 .profile-info {
@@ -34,9 +35,11 @@
 .profile-info p {
   font-size: 16px;
   margin: 15px 0;
+  color: #000;
 }
 
 .profile-info strong {
   display: inline-block;
   width: 80px;
+  color: #000;
 }
