@@ -21,7 +21,6 @@ export default function MentorBoxes({ mentor, onClick}: Props) {
       onClick(mentor);
     }
     
-    // Get the logged-in user's ID from localStorage
     const currentUserId = localStorage.getItem('userId');
     
     if (!currentUserId) {
@@ -34,15 +33,13 @@ export default function MentorBoxes({ mentor, onClick}: Props) {
       return;
     }
 
-    // Navigate to chat page with mentor's ID as chatId
-    // The ChatBox component will use this to identify the mentor
+
     navigate(`/chat/${mentor.id}`, { 
       state: { currentUserId } 
     });
   }
 
   const handleProfile = () => {
-    // Pass the mentor ID in the URL
     if (mentor.id) {
       navigate(`/mentor-profile/${mentor.id}`)
     } else {
@@ -53,10 +50,13 @@ export default function MentorBoxes({ mentor, onClick}: Props) {
 
   return (
     <div className="mentor-box">
-      <h3 className="mentor-name">{mentor.name}</h3>
+      {/* <h3 className="mentor-name">{mentor.name}</h3> */}
+      <Button text={mentor.name} onClick={handleProfile} />
       <p className="mentor-career">{mentor.title}</p>
+      
       <Button text="Start Chat" onClick={handleClick}></Button>
-      <Button text="Profile" onClick={handleProfile}></Button>
+      {/* <Button text="Profile" onClick={handleProfile}></Button> */}
+      
     </div>
   )
 }

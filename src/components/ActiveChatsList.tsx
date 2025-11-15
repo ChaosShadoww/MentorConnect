@@ -37,14 +37,12 @@ export default function ActiveChatsList({ currentUserId, userRole }: ActiveChats
 
   useEffect(() => {
     loadActiveChats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUserId, userRole]);
 
   const loadActiveChats = async () => {
     try {
       setLoading(true);
 
-      // Get all chats where the current user is either mentor or mentee
       const { data: chatsData, error: chatsError } = await supabase
         .from('chats')
         .select('*')
@@ -65,12 +63,10 @@ export default function ActiveChatsList({ currentUserId, userRole }: ActiveChats
 
       const typedChats = chatsData as ChatRecord[];
 
-      // Get the IDs of all the "other" users (not the current user)
       const otherUserIds = typedChats.map(chat => 
         chat.mentor_id === currentUserId ? chat.mentee_id : chat.mentor_id
       );
 
-      // Fetch user details for all those users
       const { data: usersData, error: usersError } = await supabase
         .from('users')
         .select('id, name, career')
@@ -85,7 +81,6 @@ export default function ActiveChatsList({ currentUserId, userRole }: ActiveChats
       const typedUsers = usersData as UserRecord[];
       const userMap = new Map(typedUsers.map(user => [user.id, user]));
 
-      // Combine chat data with user data
       const chatsWithUsers: ChatWithUser[] = typedChats.map(chat => {
         const otherUserId = chat.mentor_id === currentUserId 
           ? chat.mentee_id 
@@ -111,8 +106,6 @@ export default function ActiveChatsList({ currentUserId, userRole }: ActiveChats
   };
 
   const handleChatClick = (chat: ChatWithUser) => {
-    // Navigate to the chat page
-    // Pass the other user's ID as chatId and current user's ID
     navigate(`/chat/${chat.otherUserId}`, {
       state: { currentUserId }
     });
@@ -166,7 +159,6 @@ export default function ActiveChatsList({ currentUserId, userRole }: ActiveChats
   );
 }
 
-// Helper function to format timestamps
 function formatTime(date: Date): string {
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();

@@ -24,8 +24,6 @@ a:hover {
 
 body {
   margin: 0;
-  /* display: flex; */
-  /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
 }
@@ -67,14 +65,11 @@ button:focus-visible {
   }
 }
 
-/* header for both home pages */
 .header{
   size: 70;
   top: 0;
   text-align: center;
 }
-
-/* mentorBoxes component */
 
 
 .mentor-box:hover {
@@ -93,3 +88,6 @@ button:focus-visible {
   color: #666;
   font-size: 1rem;
 }
+
+
+

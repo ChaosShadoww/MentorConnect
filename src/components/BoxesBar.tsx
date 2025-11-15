@@ -20,7 +20,6 @@ export default function BoxesBar({
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  // Local state for mentors coming from the DB
   const [mentors, setMentors] = useState<Mentor[]>(mentorsProp ?? []);
   const [loading, setLoading] = useState(false);
 
@@ -40,9 +39,7 @@ export default function BoxesBar({
     };
   }, [mentors]);
 
-  // Fetch mentors from Supabase on mount (only if mentorsProp not provided)
   useEffect(() => {
-    // If mentors were passed as a prop, don't overwrite them
     if (mentorsProp && mentorsProp.length > 0) {
       setMentors(mentorsProp);
       return;
@@ -66,10 +63,9 @@ export default function BoxesBar({
         }
         if (!isMounted) return;
 
-        // Map DB rows to Mentor shape used by MentorBoxes
         const mapped: Mentor[] = (data ?? []).map((row: any) => ({
           id: row.id,
-          name: row.name ?? `mentor-${row.id}`, // fallback if name not present
+          name: row.name ?? `mentor-${row.id}`, 
           title: row.career ?? '',
         }));
         setMentors(mapped);

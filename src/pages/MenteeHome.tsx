@@ -9,10 +9,8 @@ function MenteeHome() {
   const [userId, setUserId] = useState<string | null>(null)
 
   useEffect(() => {
-    // Get the logged-in mentee's user ID
     const storedUserId = localStorage.getItem('userId')
     if (!storedUserId) {
-      // If no user ID, redirect to login
       navigate('/')
       return
     }
@@ -20,7 +18,6 @@ function MenteeHome() {
   }, [navigate])
 
   const handleLogout = () => {
-    // Clear user data from localStorage
     localStorage.removeItem('userId')
     localStorage.removeItem('userRole')
     localStorage.removeItem('userEmail')
@@ -31,7 +28,6 @@ function MenteeHome() {
     navigate('/view-account')
   }
 
-  // Don't render until we have the userId
   if (!userId) {
     return <div>Loading...</div>
   }

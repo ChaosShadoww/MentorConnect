@@ -36,7 +36,7 @@ function MentorProfileView() {
   }, [mentorId])
 
   const handleBack = () => {
-    navigate(-1) // Goes back one page in history
+    navigate(-1) 
   }
 
   return (

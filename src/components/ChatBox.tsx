@@ -9,7 +9,6 @@ type ChatBoxProps = {
   currentUserId: string;
 };
 
-// Define types for database responses
 interface ChatRecord {
   id: string;
   mentor_id: string;
@@ -37,21 +36,15 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
   const [loading, setLoading] = useState(true);
   const [chatRoomId, setChatRoomId] = useState<string | null>(null);
 
-  // Load messages when component mounts
   useEffect(() => {
     loadMessages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatId, currentUserId]);
 
   const loadMessages = async () => {
     try {
       setLoading(true);
       
-      // chatId could be either mentor ID or mentee ID
-      // We need to find the chat room where current user is one party
-      // and chatId is the other party
 
-      // First, determine if current user is mentor or mentee
       const { data: currentUserData } = await supabase
         .from('users')
         .select('role')
@@ -60,18 +53,15 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
 
       const currentUserRole = currentUserData?.role;
 
-      // Build the query based on who the current user is
       let query;
       
       if (currentUserRole === 'mentor') {
-        // Current user is mentor, chatId is mentee
         query = supabase
           .from('chats')
           .select('*')
           .eq('mentor_id', currentUserId)
           .eq('mentee_id', chatId);
       } else {
-        // Current user is mentee, chatId is mentor
         query = supabase
           .from('chats')
           .select('*')
@@ -84,11 +74,9 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
       let activeChatId: string;
 
       if (existingChat) {
-        // Chat room exists, use its ID
         activeChatId = (existingChat as ChatRecord).id;
         setChatRoomId(activeChatId);
       } else {
-        // No chat room exists, create a new one
         const chatData = currentUserRole === 'mentor'
           ? { mentor_id: currentUserId, mentee_id: chatId }
           : { mentor_id: chatId, mentee_id: currentUserId };
@@ -109,7 +97,6 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
         setChatRoomId(activeChatId);
       }
 
-      // Step 2: Load all messages for this chat room
       const { data: messagesData, error: messagesError } = await supabase
         .from('messages')
         .select(`
@@ -127,7 +114,6 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
         return;
       }
 
-      // Step 3: Get sender names for all unique sender IDs
       const typedMessages = messagesData as MessageRecord[];
       const senderIds = [...new Set(typedMessages.map(msg => msg.sender_id))];
       
@@ -136,13 +122,11 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
         .select('id, name')
         .in('id', senderIds);
 
-      // Create a map of user IDs to names
       const typedUsers = usersData as UserRecord[];
       const userMap = new Map(
         typedUsers.map(user => [user.id, user.name])
       );
 
-      // Transform database messages to app Message format
       const transformedMessages: Message[] = typedMessages.map(msg => ({
         id: msg.id,
         text: msg.message_text,
@@ -163,7 +147,6 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
     if (!inputText.trim() || !chatRoomId) return;
 
     try {
-      // Save message to database
       const { data: newMessage, error } = await supabase
         .from('messages')
         .insert([
@@ -184,7 +167,6 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
 
       const typedMessage = newMessage as MessageRecord;
 
-      // Add message to local state
       const messageToAdd: Message = {
         id: typedMessage.id,
         text: inputText.trim(),
@@ -196,7 +178,6 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
       setMessages([...messages, messageToAdd]);
       setInputText('');
 
-      // Update the chat's updated_at timestamp
       await supabase
         .from('chats')
         .update({ updated_at: new Date().toISOString() })

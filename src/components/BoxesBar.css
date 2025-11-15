@@ -2,8 +2,10 @@
   width: 100%;             
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   padding: 12px 0;
+  overflow: visible;
+  padding-top: 28px;
 }
 
 .boxesbar {
@@ -11,17 +13,30 @@
   flex-direction: row;      
   flex-wrap: nowrap;        
   overflow-x: auto;         
-  overflow-y: hidden;
+  overflow-y: visible;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   padding: 8px;
-  margin: 0 8px;
+  margin: 0 12px;
   gap: 16px;                
   box-sizing: border-box;
 }
 
 .boxesbar::-webkit-scrollbar { display: none; }
 
-.mentor-box { width:260px; min-width:260px; background:#fff; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.08); padding:12px; display:flex; align-items:center; cursor:pointer; flex-shrink: 0; gap:16px}
+.mentor-box { width:260px; min-width:260px; background:#fff; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.08); padding:12px; display:flex; align-items:center; cursor:pointer; overflow: visible; flex-shrink: 0; gap:10px}
 .avatar-placeholder { width:56px; height:56px; border-radius:50%; background:#e6e6e6; display:flex; align-items:center; justify-content:center; font-weight:700; color:#555; }
 .scroll-btn { width:40px; height:40px; border-radius:8px; border:none; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.08); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:20px; }
+
+
+.mentor-box {
+  position: relative;
+}
+
+
+/* .mentor-box Button:last-child {
+  position: absolute;
+  top: -24px;      
+  left: 0;   
+  z-index: 20;      
+} */
