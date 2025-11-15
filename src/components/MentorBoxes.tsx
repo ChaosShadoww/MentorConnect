@@ -19,13 +19,26 @@ export default function MentorBoxes({ mentor, onClick}: Props) {
   const handleClick = () => {
     if(onClick){
       onClick(mentor);
-      // If mentor.id exists, use it as the chat id
-      const chatId = mentor.id ?? `mentor-${mentor.name.replace(/\s+/g, '-')}`;
-
-      // Try to read current user id from localStorage (or replace with your auth)
-      const currentUserId = localStorage.getItem('currentUserId') ?? 'unknown-user';
-      navigate(`/chat/${chatId}`, { state: { currentUserId } });
     }
+    
+    // Get the logged-in user's ID from localStorage
+    const currentUserId = localStorage.getItem('userId');
+    
+    if (!currentUserId) {
+      alert('Please log in to start a chat');
+      return;
+    }
+    
+    if (!mentor.id) {
+      alert('Cannot start chat: Mentor ID is missing');
+      return;
+    }
+
+    // Navigate to chat page with mentor's ID as chatId
+    // The ChatBox component will use this to identify the mentor
+    navigate(`/chat/${mentor.id}`, { 
+      state: { currentUserId } 
+    });
   }
 
   const handleProfile = () => {
