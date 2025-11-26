@@ -20,8 +20,8 @@ export default function ChatPage() {
   }
 
   return ( 
-    <div> 
-      <Button text="x" onClick={handleBack}></Button>
+    <div style={{backgroundColor: '#d7d0f8ff'}}className="full-screen-page"> 
+      <Button text="Exit Chat" onClick={handleBack}></Button>
       <ChatBox chatId={chatId} currentUserId={currentUserId} /> 
     </div>
     

@@ -40,7 +40,11 @@ function MentorProfileView() {
   }
 
   return (
-    <div className="mentor-profile-page">
+    <div 
+      className="mentor-profile-page full-screen-page"
+      style={{backgroundColor: '#82c293'}}
+    
+    >
       <Button text="x" onClick={handleBack}></Button>
       
       <h1>Mentor Profile</h1>

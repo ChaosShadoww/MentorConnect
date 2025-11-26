@@ -10,6 +10,39 @@ function Login() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const navigate = useNavigate()
+    
+    
+    // --- Styles for Tab Switching (Rounds the buttons) ---
+    const baseButtonStyle = {
+        borderRadius: '10px', // Apply rounding to buttons
+        margin: '5px',
+    };
+
+    const selectedStyle = {
+        ...baseButtonStyle,
+        backgroundColor: 'white',
+        color: 'green',
+        border: '2px solid green',
+        fontWeight: 'bold',
+    };
+    
+    // Explicitly setting unselected style for robustness
+    const unselectedStyle = { 
+        ...baseButtonStyle,
+        backgroundColor: '#1a1a1a', 
+        color: 'rgba(255, 255, 255, 0.87)', 
+    };
+
+    // --- Rounded Input Style ---
+    const inputStyle = {
+        width: "350px", 
+        height: "16px",
+        borderRadius: '8px', // Added: Rounded corners for inputs
+        padding: '10px',     // Added: Padding for a better look
+        margin: '5px 0',     // Added: Vertical spacing
+    }
+    // --- End Styles ---
+
 
     const handleLogin = async () => {
         setError('')
@@ -63,18 +96,48 @@ function Login() {
         navigate('/create-profile') 
     }
 
+
     return (
-        <div className="login-page"> 
-            <Button text="Mentor" onClick={() => setSelectedRole('mentor')}></Button>
-            <Button text="Mentee" onClick={() => setSelectedRole('mentee')}></Button>
+        <div 
+            style={{backgroundColor: '#82c293'}}
+            className="login-page full-screen-page" // Added full-screen-page for full background coverage
+        > 
+
+            {/* Added borderRadius to h1 for a rounded header look */}
+            <h1 style={{
+                color: 'white',
+                backgroundColor: 'green', 
+                fontFamily: 'Sans', 
+                borderRadius: '15px', 
+                padding: '10px'
+            }}>
+                MentorConnect
+            </h1>
+
+            <h5>Please select a role before logging in : </h5>
+
+            {/* Buttons with conditional style and correct syntax */}
+            <Button 
+                text="Mentor" 
+                onClick={() => setSelectedRole('mentor')}
+                style={selectedRole === 'mentor' ? selectedStyle : unselectedStyle}
+            />
+            <Button 
+                text="Mentee" 
+                onClick={() => setSelectedRole('mentee')}
+                style={selectedRole === 'mentee' ? selectedStyle : unselectedStyle} 
+            />
             
-            <h1>MentorConnect</h1>
+             <br/>
+             <br/>
 
             {error && <p style={{ color: 'red' }}>{error}</p>}
             
+            {/* Inputs using the new rounded inputStyle */}
             <input 
                 type="email" 
-                placeholder="Email"
+                placeholder="Email" 
+                style={inputStyle}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
@@ -82,17 +145,19 @@ function Login() {
             <br />
             <input 
                 type="password" 
-                placeholder="Password"
+                placeholder="Password" 
+                style={inputStyle}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
             />
             <br />
+            <br/ >
             <Button 
                 text={loading ? "Logging in..." : "Login"} 
                 onClick={handleLogin}
             />
-            <br />
+            
             <Button 
                 text="Create Account" 
                 onClick={handleCreateAccount}

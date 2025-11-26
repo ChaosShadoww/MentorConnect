@@ -33,9 +33,9 @@ function MenteeHome() {
   }
 
   return (
-    <div>
+    <div style={{backgroundColor: '#82c293'}}className="full-screen-page">
       <header className="header">
-        <h1>Mentee HomePage</h1>
+        <h1 style={{color: 'white',backgroundColor: 'green', fontFamily: 'Sans'}}>Mentee HomePage</h1>
       </header>
       
       <Button text="My Account" onClick={handleAccount} />

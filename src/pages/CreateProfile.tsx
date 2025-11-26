@@ -96,26 +96,34 @@ function CreateProfile() {
     }
   }
 
+  const handleBack = () => {
+    navigate(-1) 
+  }
+
   return (
-    <div className="createProfile-page">
+    <div style={{backgroundColor: '#82c293'}}className="createProfile-page full-screen-page">
+
+      <h1 style={{color: 'white',backgroundColor: 'green', fontFamily: 'Sans'}}>Create MentorConnect Profile</h1>
+
+      <h5>Please select a role to create an account:</h5>
+
       <Button text="Mentor" onClick={() => setSelectedRole('mentor')}></Button>
       <Button text="Mentee" onClick={() => setSelectedRole('mentee')}></Button>
-      
-      <h1>Create MentorConnect Profile</h1>
+      <br/>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       
       <input 
         id="name"
         type="name" 
-        placeholder="Please enter your name"
+        placeholder="Please enter your name" style={{width: "350px", height: "16px"}}
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <br />
       <input 
         type="email" 
-        placeholder="Email"
+        placeholder="Email" style={{width: "350px", height: "16px"}}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -123,7 +131,7 @@ function CreateProfile() {
       <input 
         id="firstPass"
         type="password" 
-        placeholder="Password (min 8 characters)"
+        placeholder="Password (min 8 characters)"style={{width: "350px", height: "16px"}}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -131,7 +139,7 @@ function CreateProfile() {
       <input 
         id="confirmPass"
         type="password" 
-        placeholder="Confirm Password"
+        placeholder="Confirm Password" style={{width: "350px", height: "16px"}}
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
@@ -139,7 +147,7 @@ function CreateProfile() {
       <input 
         id="career"
         type="text" 
-        placeholder="Your Career/Major"
+        placeholder="Your Career/Major" style={{width: "350px", height: "16px"}}
         value={career}
         onChange={(e) => setCareer(e.target.value)}
       />
@@ -147,6 +155,10 @@ function CreateProfile() {
       <Button 
         text={loading ? "Creating Account..." : "Create Account"} 
         onClick={handleSubmit}
+      />
+      <br/>
+      <Button
+        text="Cancel" onClick={handleBack}
       />
     </div>
   )
