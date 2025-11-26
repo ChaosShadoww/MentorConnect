@@ -50,13 +50,42 @@ export default function MentorBoxes({ mentor, onClick}: Props) {
 
   return (
     <div className="mentor-box">
-      {/* <h3 className="mentor-name">{mentor.name}</h3> */}
-      <Button text={mentor.name} onClick={handleProfile} />
-      <p className="mentor-career">{mentor.title}</p>
+      {}
       
-      <Button text="Start Chat" onClick={handleClick}></Button>
-      {/* <Button text="Profile" onClick={handleProfile}></Button> */}
-      
+      {}
+      <div className="avatar-placeholder">
+        {mentor.name.substring(0, 1)}
+      </div>
+
+      {}
+      <div className="mentor-info">
+        <h3 className="mentor-name">{mentor.name}</h3>
+        <p className="mentor-title">{mentor.title || 'No Title'}</p>
+      </div>
+
+      {}
+      <div className="mentor-actions">
+        {}
+        <Button 
+          text="Start Chat" 
+          onClick={handleClick} 
+          style={{ 
+            backgroundColor: '#388e3c', 
+            color: 'white', 
+            border: 'none', 
+          }}
+        />
+        {}
+        <Button 
+          text="Profile" 
+          onClick={handleProfile} 
+          style={{ 
+            backgroundColor: 'transparent', 
+            color: '#388e3c', 
+            border: '1px solid #388e3c',
+          }} 
+        />
+      </div>
     </div>
   )
 }

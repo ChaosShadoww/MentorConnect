@@ -225,8 +225,10 @@ export default function ChatBox({ chatId, currentUserId }: ChatBoxProps) {
           onKeyPress={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Type a message..."
         />
-        <Button text="Send" onClick={handleSend} />
+        <Button text="Send" onClick={handleSend} className="send-btn" />
       </div>
     </div>
   );
 }
+
+

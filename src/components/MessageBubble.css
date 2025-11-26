@@ -11,7 +11,7 @@
 
 .message.sent {
   align-self: flex-end;
-  background: rgb(125, 125, 242);
+  background: rgba(18, 80, 13, 1);
   color: white;
   border-bottom-right-radius: 4px;
 }

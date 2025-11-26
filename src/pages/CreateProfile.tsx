@@ -14,6 +14,37 @@ function CreateProfile() {
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
+
+  const inputStyle = {
+    width: "350px", 
+    height: "16px",
+    borderRadius: '8px', 
+    padding: '10px',     
+    margin: '5px 0',     
+    textAlign: 'center' as const, 
+  }
+  
+  const baseButtonStyle = {
+    borderRadius: '10px',
+    margin: '5px',
+  };
+
+  const selectedStyle = {
+    ...baseButtonStyle,
+    backgroundColor: 'white',
+    color: 'green',
+    border: '2px solid green',
+    fontWeight: 'bold',
+  };
+  
+  const unselectedStyle = { 
+    ...baseButtonStyle,
+    backgroundColor: '#1a1a1a', 
+    color: 'rgba(255, 255, 255, 0.87)', 
+  };
+  
+
+
   const handleSubmit = async () => {
     setError('')
 
@@ -55,7 +86,7 @@ function CreateProfile() {
         .from('users')
         .select('email')
         .eq('email', email)
-        .single()
+        .maybeSingle() 
 
       if (existingUser) {
         alert('Email already exists. Please use a different email or login.')
@@ -63,7 +94,7 @@ function CreateProfile() {
         return
       }
 
-      // Insert new user into database
+      
       const { data, error: insertError } = await supabase
         .from('users')
         .insert([
@@ -87,7 +118,7 @@ function CreateProfile() {
       console.log('Profile created successfully:', data)
       alert('Account created successfully!')
       
-      navigate('/')
+      navigate('/') 
     } catch (err) {
       console.error('Unexpected error:', err)
       alert('An unexpected error occurred')
@@ -101,14 +132,33 @@ function CreateProfile() {
   }
 
   return (
-    <div style={{backgroundColor: '#82c293'}}className="createProfile-page full-screen-page">
-
-      <h1 style={{color: 'white',backgroundColor: 'green', fontFamily: 'Sans'}}>Create MentorConnect Profile</h1>
+    <div 
+      style={{backgroundColor: '#82c293'}}
+      className="createProfile-page full-screen-page"
+    >
+      <h1 style={{
+        color: 'white',
+        backgroundColor: 'green', 
+        fontFamily: 'Sans', 
+        borderRadius: '15px', 
+        padding: '10px'
+      }}>
+        Create MentorConnect Profile
+      </h1>
 
       <h5>Please select a role to create an account:</h5>
 
-      <Button text="Mentor" onClick={() => setSelectedRole('mentor')}></Button>
-      <Button text="Mentee" onClick={() => setSelectedRole('mentee')}></Button>
+      <Button 
+        text="Mentor" 
+        onClick={() => setSelectedRole('mentor')}
+        style={selectedRole === 'mentor' ? selectedStyle : unselectedStyle}
+      />
+      <Button 
+        text="Mentee" 
+        onClick={() => setSelectedRole('mentee')}
+        style={selectedRole === 'mentee' ? selectedStyle : unselectedStyle} 
+      />
+      
       <br/>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -116,49 +166,62 @@ function CreateProfile() {
       <input 
         id="name"
         type="name" 
-        placeholder="Please enter your name" style={{width: "350px", height: "16px"}}
+        placeholder="Name" 
+        style={inputStyle}
         value={name}
         onChange={(e) => setName(e.target.value)}
+        disabled={loading}
       />
       <br />
       <input 
         type="email" 
-        placeholder="Email" style={{width: "350px", height: "16px"}}
+        placeholder="Email" 
+        style={inputStyle}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        disabled={loading}
       />
       <br />
       <input 
         id="firstPass"
         type="password" 
-        placeholder="Password (min 8 characters)"style={{width: "350px", height: "16px"}}
+        placeholder="Password (min 8 characters)"
+        style={inputStyle}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        disabled={loading}
       />
       <br />
       <input 
         id="confirmPass"
         type="password" 
-        placeholder="Confirm Password" style={{width: "350px", height: "16px"}}
+        placeholder="Confirm Password" 
+        style={inputStyle}
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
+        disabled={loading}
       />
       <br/>
       <input 
         id="career"
         type="text" 
-        placeholder="Your Career/Major" style={{width: "350px", height: "16px"}}
+        placeholder="Your Career/Major" 
+        style={inputStyle}
         value={career}
         onChange={(e) => setCareer(e.target.value)}
+        disabled={loading}
       />
       <br/>
       <Button 
         text={loading ? "Creating Account..." : "Create Account"} 
         onClick={handleSubmit}
+        disabled={loading}
       />
       <br/>
       <Button
-        text="Cancel" onClick={handleBack}
+        text="Cancel" 
+        onClick={handleBack}
+        disabled={loading}
       />
     </div>
   )

@@ -39,20 +39,45 @@ function MentorProfileView() {
     navigate(-1) 
   }
 
+
+
   return (
     <div 
-      className="mentor-profile-page full-screen-page"
-      style={{backgroundColor: '#82c293'}}
-    
+      className="full-screen-page"
+      style={{
+        backgroundColor: '#82c293',
+        display: 'flex',            
+        justifyContent: 'center',  
+        alignItems: 'center',       
+      }}
     >
-      <Button text="x" onClick={handleBack}></Button>
-      
-      <h1>Mentor Profile</h1>
-      
-      <div className="profile-info">
-        <p><strong>Name:</strong> {mentor?.name || 'Not set'}</p>
-        <p><strong>Email:</strong> {mentor?.email}</p>
-        <p><strong>Career:</strong> {mentor?.career}</p>
+      <div className="mentor-profile-card"> {}
+        
+        {}
+        <Button 
+          text="x" 
+          onClick={handleBack} 
+          style={{
+            position: 'absolute', 
+            top: '15px',
+            right: '15px',
+            padding: '5px 10px',
+            fontSize: '1.2rem',
+            backgroundColor: 'transparent',
+            color: '#333',
+            border: 'none',
+          }}
+        />
+        
+        <h1>Mentor Profile</h1>
+        
+        <div className="profile-info">
+          <p><strong>Name:</strong> {mentor?.name || 'Not set'}</p>
+          <p><strong>Email:</strong> {mentor?.email}</p>
+          <p><strong>Career:</strong> {mentor?.career}</p>
+        </div>
+
+       
       </div>
     </div>
   )

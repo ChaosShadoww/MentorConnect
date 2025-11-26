@@ -10,6 +10,7 @@ type Props = {
   onCardClick?: (m: Mentor) => void;
 };
 
+
 export default function BoxesBar({
   mentors: mentorsProp,
   cardWidth = 260,

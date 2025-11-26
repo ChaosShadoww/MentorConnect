@@ -34,13 +34,44 @@ function MenteeHome() {
 
   return (
     <div style={{backgroundColor: '#82c293'}}className="full-screen-page">
-      <header className="header">
-        <h1 style={{color: 'white',backgroundColor: 'green', fontFamily: 'Sans'}}>Mentee HomePage</h1>
+      {}
+      <header className="header" style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '10px 20px', 
+        backgroundColor: 'green'
+      }}>
+        <h1 style={{color: 'white', fontFamily: 'Sans', margin: 0}}>
+          Mentee HomePage
+        </h1>
+        
+        {}
+        <div style={{display: 'flex', gap: '10px'}}>
+          {}
+          <Button 
+            text="My Account" 
+            onClick={handleAccount} 
+            style={{ 
+              backgroundColor: 'transparent', 
+              color: 'white', 
+              border: '1px solid white', 
+              padding: '8px 16px' 
+            }} 
+          />
+          <Button 
+            text="Logout" 
+            onClick={handleLogout} 
+            style={{ 
+              backgroundColor: '#d9534f', 
+              color: 'white', 
+              border: 'none', 
+              padding: '8px 16px'
+            }} 
+          />
+        </div>
       </header>
       
-      <Button text="My Account" onClick={handleAccount} />
-      <Button text="Logout" onClick={handleLogout} />
-
       <div id="Bar-Section" style={{ padding: '0 16px', marginTop: '30px' }}>
         <h2>Mentors</h2>
         <BoxesBar onCardClick={(m) => console.log('Clicked on:', m.name)} />
