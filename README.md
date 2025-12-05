@@ -309,8 +309,8 @@ The application uses Supabase with the following table structure:
 - `created_at` (timestamptz) - Message timestamp
 
 ## Team
-
-- Elisha Jeanbaptiste/Diego Avalos - FrontEnd Development
+- Elisha Jeanbaptiste - Project Manager/Frontend Developement
+- Diego Avalos - FrontEnd Development
 - Nevaeh Wynn - UI/UX Design
 - Jeffrey Arias/Sean Ramirez - Database Integration/BackEnd Development
 
